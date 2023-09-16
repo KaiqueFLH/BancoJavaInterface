@@ -26,12 +26,15 @@ public abstract class ContaBancaria implements IImprimivel<String> {
         this.saldo = saldo;
     }
 
-    public abstract void sacar(double valor);
+    public abstract String sacar(double valor);
 
-    public abstract void depositar(double valor);
+    public abstract String depositar(double valor);
 
-    public void transferir(double valor, ContaBancaria contaRecebedora) {
+    public String transferir(double valor, ContaBancaria contaRecebedora) {
+        this.sacar(valor);
+        contaRecebedora.depositar(valor);
 
+        return "Transferência realizada com sucesso!";
     }
 
     @Override

@@ -8,13 +8,17 @@ public class ContaPoupanca extends ContaBancaria{
     }
 
     @Override
-    public void sacar(double valor) {
+    public String sacar(double valor) {
+        this.setSaldo(this.getSaldo() - valor);
 
+        return "Saque realizado com sucesso!";
     }
 
     @Override
-    public void depositar(double valor) {
+    public String depositar(double valor) {
+        this.setSaldo(this.getSaldo() + valor);
 
+        return "Depósito realizado com sucesso!";
     }
 
     @Override
