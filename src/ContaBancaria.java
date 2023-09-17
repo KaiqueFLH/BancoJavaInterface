@@ -34,7 +34,7 @@ public abstract class ContaBancaria implements IImprimivel<String> {
         this.sacar(valor);
         contaRecebedora.depositar(valor);
 
-        return "Transferência realizada com sucesso!";
+        return "Transferência realizada com sucesso!"+ "\nSaldo atual: "+contaRecebedora.getSaldo();
     }
 
     @Override

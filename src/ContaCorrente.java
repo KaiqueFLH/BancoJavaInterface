@@ -2,26 +2,28 @@ public class ContaCorrente extends ContaBancaria{
 
     private double taxaOperacao;
 
-    public ContaCorrente(int numeroConta, double saldo, double taxaOperacao) {
+    public ContaCorrente(int numeroConta, double saldo) {
         super(numeroConta, saldo);
-        this.taxaOperacao = taxaOperacao;
+        this.taxaOperacao = 1;
     }
 
     @Override
     public String sacar(double valor) {
-        this.setSaldo(getSaldo()-valor);
-        return "Saque realizado com sucesso!";
+        this.setSaldo(getSaldo()-(valor + valor*taxaOperacao/100));
+        return "Saque realizado com sucesso! Taxa de operação: "+taxaOperacao+"%" + "\nSaldo atual: "+getSaldo();
     }
 
     @Override
     public String depositar(double valor) {
-        this.setSaldo(getSaldo()+valor);
-        return "Depósito realizado com sucesso!";
+        this.setSaldo(getSaldo()+valor - (valor*taxaOperacao/100));
+        return "Depósito realizado com sucesso! Taxa de operação: "+taxaOperacao+"%"+ "\nSaldo atual: "+getSaldo();
     }
 
     @Override
     public String mostrarDados() {
-        return null;
+        return "ContaCorrente{" +
+                "taxaOperacao=" + taxaOperacao +
+                super.toString();
     }
 
     @Override

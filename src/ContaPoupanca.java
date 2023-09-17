@@ -9,21 +9,33 @@ public class ContaPoupanca extends ContaBancaria{
 
     @Override
     public String sacar(double valor) {
-        this.setSaldo(this.getSaldo() - valor);
-
-        return "Saque realizado com sucesso!";
+        if (this.getSaldo() >=valor){
+            this.setSaldo(this.getSaldo() - valor);
+            return "Saque realizado com sucesso!"+ "\nSaldo atual: "+getSaldo();
+        }else {
+            valor = valor - this.getSaldo();
+            this.setSaldo(0);
+            if (valor> limite){
+                return "Saldo insuficiente! Seu limite iria estourar caso completasse a transação!";
+            }else {
+                limite = limite - valor;
+            }
+            return "Saque realizado com sucesso! Limite atual: " + limite+ "\nSaldo atual: "+getSaldo();
+        }
     }
 
     @Override
     public String depositar(double valor) {
         this.setSaldo(this.getSaldo() + valor);
 
-        return "Depósito realizado com sucesso!";
+        return "Depósito realizado com sucesso!"+ "\nSaldo atual: "+getSaldo();
     }
 
     @Override
     public String mostrarDados() {
-        return null;
+        return "ContaPoupanca{" +
+                "limite=" + limite +
+                super.toString();
     }
 
     @Override
