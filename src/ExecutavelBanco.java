@@ -3,7 +3,7 @@ import java.util.Scanner;
 public class ExecutavelBanco {
 
     static Banco bancoSantoAndre = new Banco();
-    static Scanner scanner = new Scanner(System.in);
+    static Scanner sc = new Scanner(System.in);
     public static void main(String[] args) {
         menu();
     }
@@ -21,7 +21,7 @@ public class ExecutavelBanco {
                 4 - Gerar Relatório.
                 5 - Sair...
                 """);
-            opcao = scanner.nextInt();
+            opcao = sc.nextInt();
 
             switch(opcao){
                 case 1 -> criarConta();
@@ -35,7 +35,7 @@ public class ExecutavelBanco {
 
     private static void removerConta() {
         System.out.println("Informe o número da conta:");
-        int numeroConta = scanner.nextInt();
+        int numeroConta = sc.nextInt();
         ContaBancaria conta = bancoSantoAndre.procurarConta(numeroConta);
         if (conta != null){
             bancoSantoAndre.remover(conta);
@@ -49,24 +49,24 @@ public class ExecutavelBanco {
         System.out.println("Você deseja criar uma conta corrente ou poupança?");
         System.out.println("1 - Conta Corrente");
         System.out.println("2 - Conta Poupança");
-        int opcao = scanner.nextInt();
+        int opcao = sc.nextInt();
 
         if (opcao == 1){
             System.out.println("Informe o número da conta:");
-            int numeroConta = scanner.nextInt();
+            int numeroConta = sc.nextInt();
             System.out.println("Informe o saldo da conta:");
-            double saldo = scanner.nextDouble();
+            double saldo = sc.nextDouble();
             ContaBancaria contaCorrente = new ContaCorrente(numeroConta,saldo);
             bancoSantoAndre.inserir(contaCorrente);
             System.out.println("Conta criada com sucesso!");
         }
         else if (opcao == 2){
             System.out.println("Informe o número da conta:");
-            int numeroConta = scanner.nextInt();
+            int numeroConta = sc.nextInt();
             System.out.println("Informe o saldo da conta:");
-            double saldo = scanner.nextDouble();
+            double saldo = sc.nextDouble();
             System.out.println("Informe o limite da conta:");
-            double limite = scanner.nextDouble();
+            double limite = sc.nextDouble();
             ContaBancaria contaPoupanca = new ContaPoupanca(numeroConta,saldo,limite);
             bancoSantoAndre.inserir(contaPoupanca);
             System.out.println("Conta criada com sucesso!");
@@ -75,7 +75,7 @@ public class ExecutavelBanco {
 
     private static void selecionarConta() {
         System.out.println("Informe o número da conta:");
-        int numeroConta = scanner.nextInt();
+        int numeroConta = sc.nextInt();
         ContaBancaria conta = bancoSantoAndre.procurarConta(numeroConta);
         if (conta != null){
             menuConta(conta);
@@ -86,6 +86,7 @@ public class ExecutavelBanco {
 
     private static void menuConta(ContaBancaria conta) {
         int opcao;
+        Relatorio relatorio = new Relatorio();
         do {
             System.out.println("""
                 ====== MENU ======
@@ -96,13 +97,13 @@ public class ExecutavelBanco {
                 4 - Mostrar Dados.
                 5 - Voltar para o início...
                 """);
-            opcao = scanner.nextInt();
+            opcao = sc.nextInt();
 
             switch(opcao){
                 case 1 -> sacar(conta);
                 case 2 -> depositar(conta);
                 case 3 -> transferir(conta);
-                case 4 -> System.out.println(conta.mostrarDados());
+                case 4 -> System.out.println(relatorio.gerarRelatorio(conta));
                 case 5 -> System.out.println("Você será redirecionado para o início...");
             }
         }while (opcao !=5);
@@ -110,11 +111,11 @@ public class ExecutavelBanco {
 
     private static void transferir(ContaBancaria conta) {
         System.out.println("Informe o número da conta que irá receber a transferência:");
-        int numeroConta = scanner.nextInt();
+        int numeroConta = sc.nextInt();
         ContaBancaria contaRecebedora = bancoSantoAndre.procurarConta(numeroConta);
         if (contaRecebedora != null){
             System.out.println("Informe o valor a ser transferido:");
-            double valor = scanner.nextDouble();
+            double valor = sc.nextDouble();
             System.out.println(conta.transferir(valor,contaRecebedora));
         }else {
             System.out.println("Conta não encontrada!");
@@ -123,13 +124,14 @@ public class ExecutavelBanco {
 
     private static void depositar(ContaBancaria conta) {
         System.out.println("Informe o valor a ser depositado:");
-        double valor = scanner.nextDouble();
+        double valor = sc.nextDouble();
         System.out.println(conta.depositar(valor));
     }
 
     private static void sacar(ContaBancaria conta) {
         System.out.println("Informe o valor a ser sacado:");
-        double valor = scanner.nextDouble();
+        double valor = sc.nextDouble();
         System.out.println(conta.sacar(valor));
     }
+
 }

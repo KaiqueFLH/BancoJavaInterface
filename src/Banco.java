@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class Banco implements IImprimivel<String>{
+public class Banco implements IImprimivel<ArrayList<ContaBancaria>> {
 
     static ArrayList<ContaBancaria> listaContasBancarias = new ArrayList<>();
 
@@ -22,13 +22,6 @@ public class Banco implements IImprimivel<String>{
         return null;
     }
 
-
     @Override
-    public String mostrarDados() {
-        System.out.println("=== RELATÓRIO ===");
-        for (ContaBancaria contaBancaria: listaContasBancarias) {
-            return contaBancaria.mostrarDados();
-        }
-        return null;
-    }
+    public ArrayList<ContaBancaria> mostrarDados() { return listaContasBancarias; }
 }
